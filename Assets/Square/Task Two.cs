@@ -1,19 +1,26 @@
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class TaskTwo : MonoBehaviour
 {
     Rigidbody2D rb;
+    HelperScript hello;
     public bool isFacingRight;
     public Animator anim;
     public LayerMask groundLayer;
     bool isGrounded;
+    public float lives;
     
     // Checks If Sprite is Touching a Box Collider
 
     void Start()
     {
+        lives = 3;
+
+        hello = gameObject.AddComponent<HelperScript>();
+
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
         groundLayer = LayerMask.GetMask("Ground");
@@ -39,12 +46,12 @@ public class TaskTwo : MonoBehaviour
 
         if (xvel > 0)
         {
-            gameObject.transform.localScale = new Vector3((float)1, (float)1, (float)1);
+            hello.DoFlipObject(true);
         }
 
         if (xvel < 0)
         {
-            gameObject.transform.localScale = new Vector3((float)-1, (float)1, (float)1);
+            hello.DoFlipObject(true);
         }
 
         if ( ((Input.GetKeyDown(KeyCode.Space) || (Input.GetKeyDown("w")) )))              //Increases velocity to move upward (Jump) if sprite is touching a box collider
@@ -80,9 +87,14 @@ public class TaskTwo : MonoBehaviour
 
         GroundCheck();
 
-        print("gc=" + isGrounded);
+        // print("gc=" + isGrounded);
 
+        if(Input.GetKey("h"))
+        {
+            hello.HelloWorld();
         }
+
+    }
     
         void GroundCheck()
         {
@@ -104,7 +116,7 @@ public class TaskTwo : MonoBehaviour
 
             if (hit.collider != null)
             {
-                print("Player has collided with Ground layer");
+              //  print("Player has collided with Ground layer");
                 hitColor = Color.green;
             }
 
