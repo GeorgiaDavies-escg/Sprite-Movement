@@ -46,7 +46,7 @@ public class TaskTwo : MonoBehaviour
 
         if (xvel > 0)
         {
-            hello.DoFlipObject(true);
+            hello.DoFlipObject(false);
         }
 
         if (xvel < 0)

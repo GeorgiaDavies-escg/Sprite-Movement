@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -9,12 +10,15 @@ public class RaycastScript : MonoBehaviour
     LayerMask groundLayerMask;
     Rigidbody2D rb;
     Vector2 vel;
-    
+    HelperScript helper;
+
+
 
     void Start()
     {
         groundLayerMask = LayerMask.GetMask("Ground");
         rb = GetComponent<Rigidbody2D>();
+        helper = gameObject.AddComponent<HelperScript>();
 
         vel.x = 1;
 
@@ -25,6 +29,8 @@ public class RaycastScript : MonoBehaviour
 
         if (vel.x > 0.5f)
         {
+            helper.DoFlipObject(false);
+
             if (ExtendedRayCollisionCheck(0.3f, 0) == false)
             {
                 vel.x = -1;
@@ -34,6 +40,9 @@ public class RaycastScript : MonoBehaviour
         {
             if (vel.x < -0.5f )
             {
+                helper.DoFlipObject(true);
+
+
                 if (ExtendedRayCollisionCheck(-0.3f, 0) == false)
                 {
                     vel.x = 1;
